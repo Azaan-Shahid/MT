@@ -1,0 +1,1854 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Products - Master Traders</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary-color: #3d6aff;
+            --secondary-color: #008eec;
+            --dark-color: #212121;
+            --light-color: #f8f9fa;
+            --text-color: #333;
+            --accent-color: #ff6b6b;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 50px;
+        }
+        
+        /* Sidebar Menu */
+        .sidebar {
+            position: fixed;
+            left: -300px;
+            top: 0;
+            width: 300px;
+            height: 100vh;
+            background: var(--dark-color);
+            z-index: 1001;
+            transition: all 0.3s ease;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .sidebar-header img {
+            height: 40px;
+            width: auto;
+        }
+
+        .sidebar-menu {
+            padding: 20px 0;
+            list-style: none;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 0;
+        }
+
+        .sidebar-menu a {
+            display: block;
+            padding: 15px 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .sidebar-menu a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .sidebar-menu a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+
+        .menu-toggle {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--primary-color);
+            display: block;
+            z-index: 1002;
+            margin-right: 10px;
+        }
+        
+        /* Navigation */
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-menu li {
+            margin-left: 20px;
+        }
+        
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s;
+        }
+        
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+        }
+        
+        .breadcrumb li {
+            margin: 0 5px;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: '/';
+            margin-left: 10px;
+            color: #ccc;
+        }
+        
+        /* Button Styles */
+        .btn {
+            position: relative;
+            padding: 12px 24px;
+            border-radius: 7px;
+            border: 1px solid var(--primary-color);
+            font-size: 14px;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 2px;
+            background: transparent;
+            color: #fff;
+            overflow: hidden;
+            box-shadow: 0 0 0 0 transparent;
+            transition: all 0.2s ease-in;
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: var(--primary-color);
+            box-shadow: 0 0 30px 5px rgba(0, 142, 236, 0.815);
+            transition: all 0.2s ease-out;
+            color: #fff;
+        }
+        
+        .btn:hover::before {
+            animation: sh02 0.5s 0s linear;
+        }
+        
+        .btn::before {
+            content: '';
+            display: block;
+            width: 0px;
+            height: 86%;
+            position: absolute;
+            top: 7%;
+            left: 0%;
+            opacity: 0;
+            background: #fff;
+            box-shadow: 0 0 50px 30px #fff;
+            transform: skewX(-20deg);
+        }
+        
+        @keyframes sh02 {
+            from {
+                opacity: 0;
+                left: 0%;
+            }
+        
+            50% {
+                opacity: 1;
+            }
+        
+            to {
+                opacity: 0;
+                left: 100%;
+            }
+        }
+        
+        .btn:active {
+            box-shadow: 0 0 0 0 transparent;
+            transition: box-shadow 0.2s ease-in;
+        }
+        
+        .btn-dark {
+            background: var(--dark-color);
+            border-color: var(--dark-color);
+        }
+        
+        /* Section Styles */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--dark-color);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+        
+        /* Products Section */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .product-image {
+            height: 200px;
+            overflow: hidden;
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-info h3 {
+            margin-bottom: 10px;
+            color: var(--dark-color);
+        }
+        
+        .product-info p {
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        /* Categories Section */
+        .categories {
+            background-color: #f9f9f9;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .category-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 极 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .category-card i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .category-card h3 {
+            margin-bottom: 10px;
+        }
+        
+        /* Product Modal */
+        .product-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1002;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background: white;
+            margin: 50px auto;
+            max-width: 900px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            font-size: 20px;
+        }
+        
+        .modal-body {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .modal-gallery {
+            flex: 1;
+            min-width: 300px;
+            position: relative;
+        }
+        
+        .gallery-main {
+            height: 400px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f5f5f5;
+        }
+        
+        .gallery-main img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        
+        .gallery-thumbnails {
+            display: flex;
+            padding: 10px;
+            overflow-x: auto;
+            gap: 10px;
+            background: #f9f9f9;
+        }
+        
+        .gallery-thumb {
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+        
+        .gallery-thumb:hover, .gallery-thumb.active {
+            opacity: 1;
+            border-color: var(--primary-color);
+        }
+        
+        .gallery-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .gallery-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 5;
+        }
+        
+        .gallery-prev {
+            left: 15px;
+        }
+        
+        .gallery-next {
+            right: 15px;
+        }
+        
+        .modal-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 30px;
+        }
+        
+        .modal-info h2 {
+            margin-bottom: 15px;
+            color: var(--dark-color);
+        }
+        
+        .product-features {
+            margin: 20px 0;
+        }
+        
+        .product-features li {
+            margin-bottom: 8px;
+            list-style-type: none;
+            position: relative;
+            padding-left: 25px;
+        }
+        
+        .product-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            color: var(--primary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-column a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-column a:hover {
+            color: var(--primary-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: background 0.3s, transform 0.3s;
+        }
+        
+        .social-icons a:hover {
+            background: var(--primary-color);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+               text-align: center;   
+               margin-top: 20px;     
+               width: 100%;         
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .footer-logo img {
+            height: 40px;
+            width: auto;
+            max-width: 200px;
+            object-fit: contain;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .modal-body {
+                flex-direction: column;
+            }
+            
+            .gallery-main {
+                height: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Menu -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <img src="logo.png" alt="Master Traders Logo">
+            <button class="sidebar-close" id="closeSidebar"><i class="fas fa-times"></i></button>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="about.html"><i class="fas fa-info-circle"></i> About Us</a></li>
+            <li><a href="products.html"><i class="fas fa-graduation-cap"></i> Our Products</a></li>
+            <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+            <li><a href="https://wa.me/923214063509" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a></li>
+            <li><a href="mailto:shahid.hussain221147@gmail.com"><i class="fas fa-envelope"></i> Email</a></li>
+        </ul>
+    </div>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Product Modals -->
+    <!-- Bath Sheets Modal -->
+    <div class="product-modal" id="bathSheetsModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('bathSheetsModal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="bathsheets1.jpeg" alt="Towel Bath Sheets" id="bathSheetsMain">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('bathSheetsModal', 'bathsheets1.jpeg')">
+                            <img src="bathsheets1.jpeg" alt="Towel Bath Sheets">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('bathSheetsModal', 'bathsheets2.jpeg')">
+                            <img src="bathsheets2.jpeg" alt="Towel Bath Sheets">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('bathSheetsModal', 'bathsheets3.jpeg')">
+                            <img src="bathsheets3.jpeg" alt="Towel Bath Sheets">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('bathSheetsModal', 'bathsheets4.jpeg')">
+                            <img src="bathsheets4.jpeg" alt="Towel Bath Sheets">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('bathSheetsModal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('bathSheetsModal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Towel Bath Sheets</h2>
+                    <p>Luxurious and highly absorbent bath sheets made from 100% premium cotton. Our bath sheets are perfect for spa-like experiences at home, offering exceptional softness and durability.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>100% premium long-staple cotton</li>
+                            <li>High GSM (700+) for maximum absorbency</li>
+                            <li>Double-stitched edges for durability</li>
+                            <li>Available in multiple colors and sizes</li>
+                            <li>Soft and plush texture</li>
+                            <li>Quick-drying technology</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Size: 35" x 70" (standard bath sheet)</li>
+                            <li>Weight: 700 GSM</li>
+                            <li>Material: 100% Cotton</li>
+                            <li>Care: Machine washable, tumble dry low</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Towel Bath Sheets" class="btn" target="_blank" style="color: black;" >Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terry Tea Towel Modal -->
+    <div class="product-modal" id="teaTowelModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('teaTowelModal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="teatowel1.jpeg" alt="Terry Tea Towel" id="teaTowelMain">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('teaTowelModal', 'teatowel1.jpeg')">
+                            <img src="teatowel1.jpeg" alt="Terry Tea Towel">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('teaTowelModal', 'teatowel2.jpeg')">
+                            <img src="teatowel2.jpeg" alt="Terry Tea Towel">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('teaTowelModal', 'teatowel3.jpeg')">
+                            <img src="teatowel3.jpeg" alt="Terry Tea Towel">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('teaTowelModal', 'teatowel4.jpeg')">
+                            <img src="teatowel4.jpeg" alt="Terry Tea Towel">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('teaTowelModal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('teaTowelModal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Terry Tea Towel</h2>
+                    <p>Highly absorbent tea towels made from premium terry cloth. Perfect for drying dishes, glassware, and general kitchen use with exceptional absorbency and durability.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>Premium terry cloth construction</li>
+                            <li>High absorbency for quick drying</li>
+                            <li>Reinforced edges for durability</li>
+                            <li>Lint-free performance</li>
+                            <li>Available in multiple colors and patterns</li>
+                            <li>Eco-friendly materials</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Size: 18" x 28" (standard tea towel size)</li>
+                            <li>Material: 100% Cotton Terry</li>
+                            <li>Weight: 400 GSM</li>
+                            <li>Care: Machine washable, tumble dry</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Terry Tea Towels" class="btn" target="_blank" style="color: black;">Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kitchen Towels Modal -->
+    <div class="product-modal" id="kitchenTowelModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('kitchenTowelModal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="kitchentowel1.jpeg" alt="Kitchen Towels" id="kitchenTowelMain">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('kitchenTowelModal', 'kitchentowel1.jpeg')">
+                            <img src="kitchentowel1.jpeg" alt="Kitchen Towels">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('kitchenTowelModal', 'kitchentowel2.jpeg')">
+                            <img src="kitchentowel2.jpeg" alt="Kitchen Towels">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('kitchenTowelModal', 'kitchentowel3.jpeg')">
+                            <img src="kitchentowel3.jpeg" alt="Kitchen Towels">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('kitchenTowelModal', 'kitchentowel4.jpeg')">
+                            <img src="kitchentowel4.jpeg" alt="Kitchen Towels">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('kitchenTowelModal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('kitchenTowelModal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Kitchen Towels</h2>
+                    <p>Durable and highly absorbent kitchen towels designed for everyday use. Our kitchen towels are perfect for drying hands, wiping surfaces, and handling hot cookware.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>Highly absorbent cotton blend</li>
+                            <li>Reinforced edges for extra durability</li>
+                            <li>Heat-resistant for handling hot items</li>
+                            <li>Quick-drying properties</li>
+                            <li>Available in various colors and patterns</li>
+                            <li>Eco-friendly and chemical-free</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Size: 16" x 24" (standard kitchen towel)</li>
+                            <li>Material: 70% Cotton, 30% Linen</li>
+                            <li>Weight: 350 GSM</li>
+                            <li>Care: Machine washable, tumble dry low</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Kitchen Towels" class="btn" target="_blank" style="color: black;" >Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bathrobe Modal -->
+    <div class="product-modal" id="bathrobeModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('bathrobeModal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="bathrobe1.jpeg" alt="Bathrobe" id="bathrobeMain">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('bathrobeModal', 'bathrobe1.jpeg')">
+                            <img src="bathrobe1.jpeg" alt="Bathrobe">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('bathrobeModal', 'bathrobe2.jpeg')">
+                            <img src="bathrobe2.jpeg" alt="Bathrobe">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('bathrobeModal', 'bathrobe3.jpeg')">
+                            <img src="bathrobe3.jpeg" alt="Bathrobe">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('bathrobeModal', 'bathrobe4.jpeg')">
+                            <img src="bathrobe4.jpeg" alt="Bathrobe">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('bathrobeModal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('bathrobeModal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Luxury Bathrobes</h2>
+                    <p>Experience ultimate comfort with our premium bathrobes. Made from high-quality materials, these bathrobes are perfect for relaxation after a bath or shower.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>Available in waffle and cotton varieties</li>
+                            <li>Soft, absorbent fabric</li>
+                            <li>Multiple color options</li>
+                            <li>Belt closure for secure fit</li>
+                            <li>Generous sizing for comfort</li>
+                            <li>Durable construction</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Sizes: S, M, L, XL</li>
+                            <li>Material: 100% Turkish Cotton</li>
+                            <li>Weight: 500 GSM</li>
+                            <li>Care: Machine washable, low tumble dry</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Bathrobes" class="btn" target="_blank" style="color: black;">Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Towel Bale Set Modal -->
+    <div class="product-modal" id="baleSetModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('baleSetModal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="baleset1.jpeg" alt="Towel Bale Set" id="baleSetMain">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('baleSetModal', 'baleset1.jpeg')">
+                            <img src="baleset1.jpeg" alt="Towel Bale Set">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('baleSetModal', 'baleset2.jpeg')">
+                            <img src="baleset2.jpeg" alt="Towel Bale Set">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('baleSetModal', 'baleset3.jpeg')">
+                            <img src="baleset3.jpeg" alt="Towel Bale Set">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('baleSetModal', 'baleset4.jpeg')">
+                            <img src="baleset4.jpeg" alt="Towel Bale Set">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('baleSetModal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('baleSetModal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Towel Bale Set</h2>
+                    <p>Complete towel sets for your bathroom needs. Our bale sets include a variety of towel sizes perfect for any household or hospitality setting.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>Complete set of bath, hand, and face towels</li>
+                            <li>Coordinated colors and designs</li>
+                            <li>Premium quality cotton</li>
+                            <li>Highly absorbent and soft</li>
+                            <li>Double-stitched edges for durability</li>
+                            <li>Available in various color schemes</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Set includes: 2 bath towels, 2 hand towels, 2 face towels</li>
+                            <li>Material: 100% Egyptian Cotton</li>
+                            <li>Weight: 600 GSM (bath towels)</li>
+                            <li>Care: Machine washable, tumble dry low</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Towel Bale Sets" class="btn" target="_blank" style="color: black;">Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mattress Topper Modal -->
+    <div class="product-modal" id="topperModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('topperModal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="topper1.jpeg" alt="Mattress Topper" id="topperMain">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('topperModal', 'topper1.jpeg')">
+                            <img src="topper1.jpeg" alt="Mattress Topper">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('topperModal', 'topper2.jpeg')">
+                            <img src="topper2.jpeg" alt="Mattress Topper">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('topperModal', 'topper3.jpeg')">
+                            <img src="topper3.jpeg" alt="Mattress Topper">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('topperModal', 'topper4.jpeg')">
+                            <img src="topper4.jpeg" alt="Mattress Topper">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('topperModal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('topperModal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Mattress Topper</h2>
+                    <p>Enhance your sleep experience with our premium mattress toppers. Designed for comfort and support, these toppers add an extra layer of luxury to any mattress.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>Plush, comfortable filling</li>
+                            <li>Hypoallergenic materials</li>
+                            <li>Breathable fabric for temperature regulation</li>
+                            <li>Available in various thickness levels</li>
+                            <li>Fitted design with elasticated corners</li>
+                            <li>Machine washable for easy care</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Sizes: Twin, Full, Queen, King</li>
+                            <li>Materials: Memory foam or fiber fill</li>
+                            <li>Thickness: 2-4 inches</li>
+                            <li>Care: Machine washable, tumble dry low</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Mattress Toppers" class="btn" target="_blank" style="color: black;">Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Napkins Modal -->
+    <div class="product-modal" id="napkinsModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('napkinsModal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="napkins1.jpeg" alt="Napkins" id="napkinsMain">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('napkinsModal', 'napkins1.jpeg')">
+                            <img src="napkins1.jpeg" alt="Napkins">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('napkinsModal', 'napkins2.jpeg')">
+                            <img src="napkins2.jpeg" alt="Napkins">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('napkinsModal', 'napkins3.jpeg')">
+                            <img src="napkins3.jpeg" alt="Napkins">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('napkinsModal', 'napkins4.jpeg')">
+                            <img src="napkins4.jpeg" alt="Napkins">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('napkinsModal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('napkinsModal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Premium Napkins</h2>
+                    <p>Elevate your dining experience with our high-quality napkins. Perfect for everyday use or special occasions, these napkins combine functionality with elegance.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>Soft, absorbent fabric</li>
+                            <li>Available in various colors and patterns</li>
+                            <li>Durable construction</li>
+                            <li>Lint-free performance</li>
+                            <li>Formal and casual designs available</li>
+                            <li>Eco-friendly materials</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Size: 16" x 16" (standard dinner napkin)</li>
+                            <li>Material: 100% Linen or Cotton blend</li>
+                            <li>Weight: 200 GSM</li>
+                            <li>Care: Machine washable, tumble dry low</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Napkins" class="btn" target="_blank" style="color: black;">Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Dish Cloth Modal -->
+    <div class="product-modal" id="dishClothModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('dishClothModal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="dishcloth1.jpeg" alt="Dish Cloth" id="dishClothMain">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('dishClothModal', 'dishcloth1.jpeg')">
+                            <img src="dishcloth1.jpeg" alt="Dish Cloth">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('dishClothModal', 'dishcloth2.jpeg')">
+                            <img src="dishcloth2.jpeg" alt="Dish Cloth">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('dishClothModal', 'dishcloth3.jpeg')">
+                            <img src="dishcloth3.jpeg" alt="Dish Cloth">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('dishClothModal', 'dishcloth4.jpeg')">
+                            <img src="dishcloth4.jpeg" alt="Dish Cloth">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('dishClothModal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('dishClothModal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Dish Cloths</h2>
+                    <p>Our absorbent and durable dish cloths are perfect for all your kitchen cleaning needs. Designed to be highly effective while remaining gentle on surfaces.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>Highly absorbent material</li>
+                            <li>Quick-drying properties</li>
+                            <li>Lint-free performance</li>
+                            <li>Scrubbing texture for tough stains</li>
+                            <li>Available in multiple colors</li>
+                            <li>Durable and long-lasting</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Size: 12" x 12" (standard dish cloth)</li>
+                            <li>Material: Microfiber or Cotton blend</li>
+                            <li>Weight: 250 GSM</li>
+                            <li>Care: Machine washable, tumble dry</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Dish Cloths" class="btn" target="_blank" style="color: black;">Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tea Towel Modal -->
+    <div class="product-modal" id="teaTowel2Modal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('teaTowel2Modal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="teatowel2_1.jpeg" alt="Tea Towel" id="teaTowel2Main">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('teaTowel2Modal', 'teatowel2_1.jpeg')">
+                            <img src="teatowel2_1.jpeg" alt="Tea Towel">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('teaTowel2Modal', 'teatowel2_2.jpeg')">
+                            <img src="teatowel2_2.jpeg" alt="Tea Towel">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('teaTowel2Modal', 'teatowel2_3.jpeg')">
+                            <img src="teatowel2_3.jpeg" alt="Tea Towel">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('teaTowel2Modal', 'teatowel2_4.jpeg')">
+                            <img src="teatowel2_4.jpeg" alt="Tea Towel">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('teaTowel2Modal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('teaTowel2Modal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Specialty Tea Towels</h2>
+                    <p>Our specialty tea towels are designed specifically for drying dishes and glassware without leaving lint or streaks. Perfect for achieving a sparkling clean finish.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>Ultra-absorbent material</li>
+                            <li>Lint-free performance</li>
+                            <li>Quick-drying properties</li>
+                            <li>Available in decorative designs</li>
+                            <li>Reinforced edges for durability</li>
+                            <li>Eco-friendly materials</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Size: 18" x 28" (standard tea towel)</li>
+                            <li>Material: 100% Linen or Cotton blend</li>
+                            <li>Weight: 300 GSM</li>
+                            <li>Care: Machine washable, tumble dry low</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Specialty Tea Towels" class="btn" target="_blank" style="color: black;">Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Textured Hand Bath & Mat Set Modal -->
+    <div class="product-modal" id="texturedSetModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('texturedSetModal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="texturedset1.jpeg" alt="Textured Hand Bath & Mat Set" id="texturedSetMain">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('texturedSetModal', 'texturedset1.jpeg')">
+                            <img src="texturedset1.jpeg" alt="Textured Hand Bath & Mat Set">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('texturedSetModal', 'texturedset2.jpeg')">
+                            <img src="texturedset2.jpeg" alt="Textured Hand Bath & Mat Set">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('texturedSetModal', 'texturedset3.jpeg')">
+                            <img src="texturedset3.jpeg" alt="Textured Hand Bath & Mat Set">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('texturedSetModal', 'texturedset4.jpeg')">
+                            <img src="texturedset4.jpeg" alt="Textured Hand Bath & Mat Set">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('texturedSetModal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('texturedSetModal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Textured Hand Bath & Mat Set</h2>
+                    <p>Luxurious textured hand bath and mat sets for your bathroom. These sets feature elegant textures that add a touch of sophistication while providing exceptional functionality.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>Elegant textured design</li>
+                            <li>Highly absorbent material</li>
+                            <li>Non-slip backing on mats</li>
+                            <li>Coordinated set for bathroom harmony</li>
+                            <li>Available in various color options</li>
+                            <li>Durable and long-lasting</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Set includes: 2 hand towels, 1 bath mat</li>
+                            <li>Material: 100% Cotton with textured weave</li>
+                            <li>Weight: 500 GSM (towels), 800 GSM (mat)</li>
+                            <li>Care: Machine washable, tumble dry low</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Textured Hand Bath & Mat Sets" class="btn" target="_blank" style="color: black;">Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bath Mat Modal -->
+    <div class="product-modal" id="bathMatModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('bathMatModal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="bathmat1.jpeg" alt="Bath Mat" id="bathMatMain">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('bathMatModal', 'bathmat1.jpeg')">
+                            <img src="bathmat1.jpeg" alt="Bath Mat">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('bathMatModal', 'bathmat2.jpeg')">
+                            <img src="bathmat2.jpeg" alt="Bath Mat">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('bathMatModal', 'bathmat3.jpeg')">
+                            <img src="bathmat3.jpeg" alt="Bath Mat">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('bathMatModal', 'bathmat4.jpeg')">
+                            <img src="bathmat4.jpeg" alt="Bath Mat">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('bathMatModal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('bathMatModal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Bath Mats</h2>
+                    <p>Soft and absorbent bath mats for bathroom safety and comfort. Our bath mats provide a comfortable surface to step on while absorbing moisture effectively.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>Super absorbent material</li>
+                            <li>Non-slip rubber backing</li>
+                            <li>Quick-drying properties</li>
+                            <li>Plush and comfortable underfoot</li>
+                            <li>Available in various colors and sizes</li>
+                            <li>Machine washable for easy care</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Size: 20" x 30" (standard bath mat)</li>
+                            <li>Material: 100% Cotton with rubber backing</li>
+                            <li>Weight: 800 GSM</li>
+                            <li>Care: Machine washable, air dry</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Bath Mats" class="btn" target="_blank" style="color: black;">Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Jacquard Hand Bath Modal -->
+    <div class="product-modal" id="jacquardModal">
+        <div class="modal-content">
+            <div class="modal-close" onclick="closeModal('jacquardModal')">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="modal-body">
+                <div class="modal-gallery">
+                    <div class="gallery-main">
+                        <img src="jacquard1.jpeg" alt="Jacquard Hand Bath" id="jacquardMain">
+                    </div>
+                    <div class="gallery-thumbnails">
+                        <div class="gallery-thumb active" onclick="changeImage('jacquardModal', 'jacquard1.jpeg')">
+                            <img src="jacquard1.jpeg" alt="Jacquard Hand Bath">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('jacquardModal', 'jacquard2.jpeg')">
+                            <img src="jacquard2.jpeg" alt="Jacquard Hand Bath">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('jacquardModal', 'jacquard3.jpeg')">
+                            <img src="jacquard3.jpeg" alt="Jacquard Hand Bath">
+                        </div>
+                        <div class="gallery-thumb" onclick="changeImage('jacquardModal', 'jacquard4.jpeg')">
+                            <img src="jacquard4.jpeg" alt="Jacquard Hand Bath">
+                        </div>
+                    </div>
+                    <div class="gallery-nav gallery-prev" onclick="navigateGallery('jacquardModal', -1)">
+                        <i class="fas fa-chevron-left"></i>
+                    </div>
+                    <div class="gallery-nav gallery-next" onclick="navigateGallery('jacquardModal', 1)">
+                        <i class="fas fa-chevron-right"></i>
+                    </div>
+                </div>
+                <div class="modal-info">
+                    <h2>Jacquard Hand Bath Towels</h2>
+                    <p>Elegant jacquard hand bath towels with intricate woven designs. These premium towels add a touch of luxury to any bathroom while providing exceptional absorbency.</p>
+                    
+                    <div class="product-features">
+                        <h3>Product Features:</h3>
+                        <ul>
+                            <li>Intricate jacquard woven patterns</li>
+                            <li>Premium quality cotton</li>
+                            <li>Highly absorbent</li>
+                            <li>Luxurious feel and appearance</li>
+                            <li>Available in various designs and colors</li>
+                            <li>Durable construction</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-features">
+                        <h3>Specifications:</h3>
+                        <ul>
+                            <li>Size: 16" x 30" (standard hand towel)</li>
+                            <li>Material: 100% Egyptian Cotton</li>
+                            <li>Weight: 550 GSM</li>
+                            <li>Care: Machine washable, tumble dry low</li>
+                        </ul>
+                    </div>
+                    
+                    <a href="https://wa.me/923214063509?text=I'm interested in Jacquard Hand Bath Towels" class="btn" target="_blank" style="color: black;">Inquire on WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <button class="menu-toggle" id="menuToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <img src="logo.png" alt="Master Traders Logo">
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="products.html" class="active">Our Products</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <div class="page-header">
+        <div class="container">
+            <h1>Our Premium Products</h1>
+            <ul class="breadcrumb">
+                <li><a href="index.html">Home</a></li>
+                <li>Our Products</li>
+            </ul>
+        </div>
+    </div>
+
+
+          <!-- Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <div class="section-title">
+                <h2>Product Categories</h2>
+                <p>Our Products Category</p>
+            </div>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <i class="fas fa-bath"></i>
+                    <h3>Bath Towels</h3>
+                    <p>Luxurious and absorbent towels for your bathroom</p>
+                </div>
+                
+                <div class="category-card">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Kitchen Towels</h3>
+                    <p>Durable towels for all your kitchen needs</p>
+                </div>
+                
+                <div class="category-card">
+                    <i class="fas fa-tshirt"></i>
+                    <h3>Bathrobes</h3>
+                    <p>Comfortable bathrobes for relaxation</p>
+                </div>
+                
+                <div class="category-card">
+                    <i class="fas fa-bed"></i>
+                    <h3>Bedding</h3>
+                    <p>Soft and comfortable bedding accessories</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products">
+        <div class="container">
+            <div class="section-title">
+                <h2>Explore Our Collection</h2>
+                <p>Discover our wide range of high-quality products</p>
+            </div>
+            
+            <div class="products-grid">
+                <!-- Product 1 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="bathsheets1.jpeg" alt="Towel Bath Sheets">
+                    </div>
+                    <div class="product-info">
+                        <h3>Towel Bath Sheets</h3>
+                        <p>Luxurious and highly absorbent bath sheets for ultimate comfort.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('bathSheetsModal'); return false;">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="teatowel1.jpeg" alt="Terry Tea Towel">
+                    </div>
+                    <div class="product-info">
+                        <h3>Terry Tea Towel</h3>
+                        <p>Highly absorbent tea towels perfect for your kitchen needs.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('teaTowelModal'); return false;">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="kitchentowel1.jpeg" alt="Kitchen Towels">
+                    </div>
+                    <div class="product-info">
+                        <h3>Kitchen Towels</h3>
+                        <p>Durable and absorbent kitchen towels for everyday use.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('kitchenTowelModal'); return false;">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="bathrobe1.jpeg" alt="Bathrobe">
+                    </div>
+                    <div class="product-info">
+                        <h3>Bathrobe</h3>
+                        <p>Premium quality bathrobes for comfort and relaxation after bath.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('bathrobeModal'); return false;">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="baleset1.jpeg" alt="Towel Bale Set">
+                    </div>
+                    <div class="product-info">
+                        <h3>Towel Bale Set</h3>
+                        <p>Complete towel sets for your bathroom needs in various sizes.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('baleSetModal'); return false;">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="topper1.jpeg" alt="Mattress Topper">
+                    </div>
+                    <div class="product-info">
+                        <h3>Mattress Topper</h3>
+                        <p>Soft and comfortable mattress toppers for better sleep experience.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('topperModal'); return false;">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Product 7 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="napkins1.jpeg" alt="Napkins">
+                    </div>
+                    <div class="product-info">
+                        <h3>Napkins</h3>
+                        <p>High-quality napkins for dining and special occasions.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('napkinsModal'); return false;">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Product 8 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="dishcloth1.jpeg" alt="Dish Cloth">
+                    </div>
+                    <div class="product-info">
+                        <h3>Dish Cloth</h3>
+                        <p>Absorbent and durable dish cloths for kitchen use.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('dishClothModal'); return false;">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Product 9 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="teatowel2_1.jpeg" alt="Tea Towel">
+                    </div>
+                    <div class="product-info">
+                        <h3>Tea Towel</h3>
+                        <p>Specialty tea towels for drying dishes and glassware.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('teaTowel2Modal'); return false;">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Product 10 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="texturedset1.jpeg" alt="Textured Hand Bath & Mat Set">
+                    </div>
+                    <div class="product-info">
+                        <h3>Textured Hand Bath & Mat Set</h3>
+                        <p>Luxurious textured hand bath and mat sets for your bathroom.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('texturedSetModal'); return false;">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Product 11 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="bathmat1.jpeg" alt="Bath Mat">
+                    </div>
+                    <div class="product-info">
+                        <h3>Bath Mat</h3>
+                        <p>Soft and absorbent bath mats for bathroom safety and comfort.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('bathMatModal'); return false;">Learn More</a>
+                    </div>
+                </div>
+                
+                <!-- Product 12 -->
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="jacquard1.jpeg" alt="Jacquard Hand Bath">
+                    </div>
+                    <div class="product-info">
+                        <h3>Jacquard Hand Bath</h3>
+                        <p>Elegant jacquard hand bath towels with intricate designs.</p>
+                        <a href="#" class="btn btn-dark" onclick="openModal('jacquardModal'); return false;">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">
+                        <img src="logo.png" alt="Master Traders Logo">
+                    </div>
+                    <p>Your trusted partner for premium quality towels and home textiles. We offer the best products at competitive prices.</p>
+                    <div class="social-icons">
+                        <a href="mailto:shahid.hussain221147@gmail.com"><i class="fas fa-envelope"></i></a>
+                       
+                        <a href="https://wa.me/923214063509" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                    
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="products.html">Our Products</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="#" onclick="openModal('bathSheetsModal'); return false;">Towel Bath Sheets</a></li>
+                        <li><a href="#" onclick="openModal('teaTowelModal'); return false;">Terry Tea Towels</a></li>
+                        <li><a href="#" onclick="openModal('bathrobeModal'); return false;">Bathrobes</a></li>
+                        <li><a href="#" onclick="openModal('baleSetModal'); return false;">Towel Bale Sets</a></li>
+                    </ul>
+                </div>
+                
+            <div class="footer-column">
+    <h3>Contact Info</h3>
+    <ul>
+        <li>
+            <i class="fas fa-map-marker-alt"></i>
+            <a href="https://www.google.com/maps/place/Harbanspura,+Lahore,+Pakistan" 
+               target="_blank" class="footer-link">
+               Harbanspura, Lahore, Pakistan
+            </a>
+        </li>
+        <li>
+            <i class="fas fa-phone"></i>
+            <a href="tel:+923214063509" class="footer-link">
+                +92 321 4063509
+            </a>
+        </li>
+        <li>
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:shahid.hussain221147@gmail.com" class="footer-link">
+                shahid.hussain221147@gmail.com
+            </a>
+        </li>
+        <li>
+            <i class="fab fa-whatsapp"></i>
+            <a href="https://wa.me/923214063509" target="_blank" class="footer-link">
+                +92 321 4063509
+            </a>
+        </li>
+    </ul>
+</div>
+
+            <div class="copyright">
+                <p>&copy; 2023 Master Traders. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Sidebar functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+
+        function openSidebar() {
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSidebarFunc() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        menuToggle.addEventListener('click', openSidebar);
+        closeSidebar.addEventListener('click', closeSidebarFunc);
+        overlay.addEventListener('click', closeSidebarFunc);
+
+        // Modal functionality
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside of modal content
+        window.onclick = function(event) {
+            const modals = document.getElementsByClassName('product-modal');
+            for (let i = 0; i < modals.length; i++) {
+                if (event.target == modals[i]) {
+                    modals[i].style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            }
+        }
+
+        // Image gallery functionality
+        function changeImage(modalId, imageSrc) {
+            document.getElementById(modalId.replace('Modal', 'Main')).src = imageSrc;
+            
+            // Update active thumbnail
+            const thumbnails = document.querySelectorAll(`#${modalId} .gallery-thumb`);
+            thumbnails.forEach(thumb => {
+                thumb.classList.remove('active');
+                if (thumb.querySelector('img').src.includes(imageSrc)) {
+                    thumb.classList.add('active');
+                }
+            });
+        }
+
+        function navigateGallery(modalId, direction) {
+            const thumbnails = document.querySelectorAll(`#${modalId} .gallery-thumb`);
+            let activeIndex = -1;
+            
+            // Find the active thumbnail index
+            for (let i = 0; i < thumbnails.length; i++) {
+                if (thumbnails[i].classList.contains('active')) {
+                    activeIndex = i;
+                    break;
+                }
+            }
+            
+            // Calculate the new index
+            let newIndex = activeIndex + direction;
+            if (newIndex < 0) newIndex = thumbnails.length - 1;
+            if (newIndex >= thumbnails.length) newIndex = 0;
+            
+            // Change to the new image
+            const newImageSrc = thumbnails[newIndex].querySelector('img').src;
+            document.getElementById(modalId.replace('Modal', 'Main')).src = newImageSrc;
+            
+            // Update active thumbnail
+            thumbnails[activeIndex].classList.remove('active');
+            thumbnails[newIndex].classList.add('active');
+        }
+    </script>
+</body>
+</html>
